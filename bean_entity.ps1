@@ -1,4 +1,4 @@
-javac bean_entity\*a 
+javac bean_entity\*a -d .
 
 rm bean_entity\*_*
 

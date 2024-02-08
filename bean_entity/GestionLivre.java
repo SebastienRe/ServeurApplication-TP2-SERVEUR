@@ -1,7 +1,5 @@
 package bean_entity;
 import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionManagement;
-import jakarta.ejb.TransactionAttribute;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.EntityManager;
 
@@ -11,29 +9,34 @@ public class GestionLivre implements IGestionLivre { // bean
     protected EntityManager em;
 
     public void nouveauLivre(String isbn, String titre) {
-        Livre l = new Livre(isbn, titre);
-        em.persist(l);
-        
-        // Enregistrement du livre dans la base de données
-        // ...
+        LivreEmp l = new LivreEmp(isbn, titre);
 
+        em.persist(l);
         System.out.println("Livre enregistré: " + l);
     }
 
     public void supprimerLivre(String isbn) {
-        Livre l = em.find(Livre.class, isbn);
+        LivreEmp l = em.find(LivreEmp.class, isbn);
         if (l != null) {
+            Emprunteur emp = l.getEmprunteur();
+            emp.setNblivresEmp(l.getEmprunteur().getNblivresEmp() - 1);
+
+            em.merge(emp);
             em.remove(l);
             System.out.println("Livre supprimé: " + l);
         }
     }
 
-    public void emprunterLivre(String isbn) {
-        Livre l = em.find(Livre.class, isbn);
+    public void emprunterLivre(String isbn, int numemp) {
+        LivreEmp l = em.find(LivreEmp.class, isbn);
         if (l != null) {
-            if (l.getDispo() > 0) {
-                l.setDispo(0);
+            if (l.getEmprunteur() == null) {
+                Emprunteur emp = em.find(Emprunteur.class, numemp);
+                l.setEmprunteur(emp);
+                emp.setNblivresEmp(emp.getNblivresEmp() + 1);
+
                 em.merge(l);
+                em.merge(emp);
                 System.out.println("Livre emprunté: " + l);
             } else {
                 System.out.println("Livre non disponible: " + l);
@@ -41,12 +44,27 @@ public class GestionLivre implements IGestionLivre { // bean
         }
     }
 
-    public void rendreLivre(String isbn) {
-        Livre l = em.find(Livre.class, isbn);
+    public void rendreLivre(String isbn, int numemp) {
+        LivreEmp l = em.find(LivreEmp.class, isbn);
         if (l != null) {
-            l.setDispo(1);
-            em.merge(l);
-            System.out.println("Livre rendu: " + l);
+            if (l.getEmprunteur() != null) {
+                Emprunteur emp = em.find(Emprunteur.class, numemp);
+                l.setEmprunteur(null);
+                emp.setNblivresEmp(emp.getNblivresEmp() - 1);
+
+                em.merge(l);
+                em.merge(emp);
+                System.out.println("Livre rendu: " + l);
+            } else {
+                System.out.println("Livre déjà rendu: " + l);
+            }
         }
+    }
+
+    public void nouveauEmprunteur(int numemp, String nom) {
+        Emprunteur emp = new Emprunteur(numemp, nom);
+        em.persist(emp);
+
+        System.out.println("Emprunteur enregistré: " + emp);
     }
 }
