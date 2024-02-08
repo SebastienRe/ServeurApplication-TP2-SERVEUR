@@ -24,11 +24,15 @@ public class Emprunteur {
         return "num : " + numemp + " - " + nom + " - Nombre de livres empruntés: " + nblivresemp;
     }
 
-    public int getNblivresEmp() {
-        return nblivresemp;
+    public void rendreLivre() {
+        nblivresemp--;
     }
 
-    public void setNblivresEmp(int i) {
-        nblivresemp = i;
+    public void emprunterLivre() {
+        this.nblivresemp++;
+    }
+
+    public int getNumemp() {
+        return numemp;
     }
 }
