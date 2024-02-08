@@ -1,11 +1,12 @@
 package bean_entity;
-import jakarta.ejb.Stateless;
+import jakarta.ejb.Stateful;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceContextType;
 import jakarta.persistence.EntityManager;
 
-@Stateless
+@Stateful
 public class GestionLivre implements IGestionLivre { // bean
-    @PersistenceContext(unitName="monUnite")
+    @PersistenceContext(unitName="monUnite", type = PersistenceContextType.EXTENDED)
     protected EntityManager em;
     Emprunteur emp;
 
@@ -36,7 +37,6 @@ public class GestionLivre implements IGestionLivre { // bean
 
         l.setEmprunteur(emp.getNumemp());
         emp.emprunterLivre();
-        em.merge(emp); // update emprunteur
 
         System.out.println("Livre emprunté: " + l);
     }
@@ -46,7 +46,6 @@ public class GestionLivre implements IGestionLivre { // bean
 
         l.setEmprunteur(0);
         emp.rendreLivre();
-        em.merge(emp); // update emprunteur
 
         System.out.println("Livre rendu: " + l);
     }
