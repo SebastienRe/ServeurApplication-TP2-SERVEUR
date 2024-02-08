@@ -1,4 +1,4 @@
-package sr;
+package bean_session;
 import jakarta.ejb.Stateless;
 
 @Stateless
