@@ -1,5 +1,6 @@
 package bean_entity;
 
+import jakarta.annotation.Resource;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -28,8 +29,8 @@ public class Emprunteur {
         nblivresemp--;
     }
 
-    public void emprunterLivre() throws NbMaxEmpruntsAtteintException {
-        if (nblivresemp >= 3) throw new NbMaxEmpruntsAtteintException();
+    public void emprunterLivre(int nbEmpruntMax) throws NbMaxEmpruntsAtteintException {
+        if (nblivresemp >= nbEmpruntMax) throw new NbMaxEmpruntsAtteintException();
         this.nblivresemp++;
     }
 

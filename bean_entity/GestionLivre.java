@@ -1,4 +1,5 @@
 package bean_entity;
+import jakarta.annotation.Resource;
 import jakarta.ejb.Stateful;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceContextType;
@@ -9,6 +10,9 @@ public class GestionLivre implements IGestionLivre { // bean
     @PersistenceContext(unitName="monUnite", type = PersistenceContextType.EXTENDED)
     protected EntityManager em;
     Emprunteur emp;
+
+    @Resource(name="nbEmpruntMax")
+    int nbEmpruntMax;
 
     public void creerSession(int numemp) throws EmprunteurNotFound {
         emp = em.find(Emprunteur.class, numemp);
@@ -38,7 +42,7 @@ public class GestionLivre implements IGestionLivre { // bean
         if (l.getEmprunteur() != 0) throw new LivreDejaEmprunte();
 
         l.setEmprunteur(emp.getNumemp());
-        emp.emprunterLivre();
+        emp.emprunterLivre(nbEmpruntMax);
 
         System.out.println("Livre emprunté: " + l);
     }

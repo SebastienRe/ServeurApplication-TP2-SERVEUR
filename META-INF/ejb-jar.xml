@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+         version="3.0">
+
+    <!-- Define your enterprise beans (EJB components) -->
+    <enterprise-beans>
+        <!-- Define a session bean -->
+        <session>
+            <!-- Specify the EJB name for the session bean -->
+            <ejb-name>GestionLivre</ejb-name>
+            <env-entry>
+                <env-entry-name>nbEmpruntMax</env-entry-name>
+                <env-entry-type>java.lang.Integer</env-entry-type>
+                <env-entry-value>3</env-entry-value>
+            </env-entry>
+            
+            <!-- You would typically have more configurations here for your session bean -->
+        </session>
+    </enterprise-beans>
+
+</ejb-jar>
