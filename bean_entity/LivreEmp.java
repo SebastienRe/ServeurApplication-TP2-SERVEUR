@@ -2,11 +2,13 @@ package bean_entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-
+import java.io.Serializable;
 @Entity
+@NamedQuery(name="livresNonEmprunte", query="SELECT l FROM LivreEmp l WHERE l.empruntepar = 0")
 @Table(name = "livre_emp")
-public class LivreEmp {
+public class LivreEmp implements Serializable {
 
     @Id
     private String isbn;
@@ -23,7 +25,7 @@ public class LivreEmp {
     }
 
     public String toString() {
-        return "Livre: " + isbn + " - " + titre + " - Emprunteur: {" + empruntepar + "}";
+        return "Livre: " + isbn + " - " + titre + " - Emprunteur: {" + empruntepar + "}\n";
     }
 
     public int getEmprunteur() {
@@ -32,7 +34,6 @@ public class LivreEmp {
 
     public void setEmprunteur(int numemp) {
         this.empruntepar = numemp;
-    }
-
+    }    
     
 }
