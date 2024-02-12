@@ -14,7 +14,7 @@ public class InfosLivres implements IInfosLivres{
     @PersistenceContext(unitName="monUnite", type = PersistenceContextType.EXTENDED)
     protected EntityManager em;
 
-    public List<LivreEmp> listeLivreDispo() throws EntityNotFoundException, NonUniqueResultException {
+    public List<LivreEmp> listeLivreDispo() {
         return em.createNamedQuery("livresNonEmprunte",LivreEmp.class).getResultList(); 
     }
 
