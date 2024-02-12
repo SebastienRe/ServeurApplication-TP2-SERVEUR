@@ -5,7 +5,7 @@ import jakarta.ejb.Remote;
 @Remote
 public interface IGestionLivre {
 
-    public void creerSession(int numemp);
+    public void creerSession(int numemp) throws EmprunteurNotFound;
 
     public void nouveauLivre(String isbn, String titre);
     public void supprimerLivre(String isbn);

@@ -10,8 +10,9 @@ public class GestionLivre implements IGestionLivre { // bean
     protected EntityManager em;
     Emprunteur emp;
 
-    public void creerSession(int numemp){
+    public void creerSession(int numemp) throws EmprunteurNotFound {
         emp = em.find(Emprunteur.class, numemp);
+        if (emp == null) throw new EmprunteurNotFound();
     }
 
     public void nouveauLivre(String isbn, String titre) {
