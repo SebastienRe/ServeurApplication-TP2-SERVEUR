@@ -5,7 +5,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceContextType;
 import jakarta.persistence.EntityManager;
 
-@Stateful
+@Stateful // version stateless dans un autre commit (tag A-Stateless) 
+          //et A-Stateful pour voir les différences entre les deux)
 public class GestionLivre implements IGestionLivre { // bean
     @PersistenceContext(unitName="monUnite", type = PersistenceContextType.EXTENDED)
     protected EntityManager em;
