@@ -32,8 +32,9 @@ public class GestionLivre implements IGestionLivre { // bean
         System.out.println("Livre supprimé: " + l);
     }
 
-    public void emprunterLivre(String isbn) {
+    public void emprunterLivre(String isbn) throws NbMaxEmpruntsAtteintException, LivreDejaEmprunte {
         LivreEmp l = em.find(LivreEmp.class, isbn);
+        if (l.getEmprunteur() != 0) throw new LivreDejaEmprunte();
 
         l.setEmprunteur(emp.getNumemp());
         emp.emprunterLivre();

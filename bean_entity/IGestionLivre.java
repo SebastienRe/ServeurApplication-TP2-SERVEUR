@@ -9,7 +9,7 @@ public interface IGestionLivre {
 
     public void nouveauLivre(String isbn, String titre);
     public void supprimerLivre(String isbn);
-    public void emprunterLivre(String isbn);
+    public void emprunterLivre(String isbn) throws NbMaxEmpruntsAtteintException, LivreDejaEmprunte;
     public void rendreLivre(String isbn);
 
     public void nouveauEmprunteur(int numemp, String nom);

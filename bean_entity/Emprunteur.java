@@ -28,7 +28,8 @@ public class Emprunteur {
         nblivresemp--;
     }
 
-    public void emprunterLivre() {
+    public void emprunterLivre() throws NbMaxEmpruntsAtteintException {
+        if (nblivresemp >= 3) throw new NbMaxEmpruntsAtteintException();
         this.nblivresemp++;
     }
 
